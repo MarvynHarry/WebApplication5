@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Departamentos" EntityType="DatabaseModel.Departamento" />
+    <EntitySet Name="Puestos" EntityType="DatabaseModel.Puesto" />
+    <AssociationSet Name="FK__Puestos__CodDepa__398D8EEE" Association="DatabaseModel.FK__Puestos__CodDepa__398D8EEE">
+      <End Role="Departamento" EntitySet="Departamentos" />
+      <End Role="Puesto" EntitySet="Puestos" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nivel" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Puestos" Relationship="DatabaseModel.FK__Puestos__CodDepa__398D8EEE" FromRole="Departamento" ToRole="Puesto" />
+  </EntityType>
+  <EntityType Name="Puesto">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodDepartamento" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Departamento" Relationship="DatabaseModel.FK__Puestos__CodDepa__398D8EEE" FromRole="Puesto" ToRole="Departamento" />
+  </EntityType>
+  <Association Name="FK__Puestos__CodDepa__398D8EEE">
+    <End Type="DatabaseModel.Departamento" Role="Departamento" Multiplicity="1" />
+    <End Type="DatabaseModel.Puesto" Role="Puesto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Puesto">
+        <PropertyRef Name="CodDepartamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
