@@ -12,7 +12,7 @@ namespace WebApplication5.Controllers
 {
     public class PuestoController : Controller
     {
-        private DatabaseEntities db = new DatabaseEntities();
+        private DatabaseEntities2 db = new DatabaseEntities2();
 
         // GET: Puesto
         public ActionResult Index()
@@ -39,7 +39,7 @@ namespace WebApplication5.Controllers
         // GET: Puesto/Create
         public ActionResult Create()
         {
-            ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Nivel");
+            ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Descripcion");
             return View();
         }
 

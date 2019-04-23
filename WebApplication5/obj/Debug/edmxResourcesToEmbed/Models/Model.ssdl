@@ -8,6 +8,13 @@
     <Property Name="Nivel" Type="int" Nullable="false" />
     <Property Name="Descripcion" Type="varchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="Nivel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Nivel" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Puestos">
     <Key>
       <PropertyRef Name="Codigo" />
@@ -16,7 +23,19 @@
     <Property Name="CodDepartamento" Type="int" Nullable="false" />
     <Property Name="Descripcion" Type="varchar" MaxLength="100" />
   </EntityType>
-  <Association Name="FK__Puestos__CodDepa__398D8EEE">
+  <Association Name="FK__Departame__Nivel__160F4887">
+    <End Role="Nivel" Type="Self.Nivel" Multiplicity="1" />
+    <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nivel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Departamentos">
+        <PropertyRef Name="Nivel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Puestos__CodDepa__19DFD96B">
     <End Role="Departamentos" Type="Self.Departamentos" Multiplicity="1" />
     <End Role="Puestos" Type="Self.Puestos" Multiplicity="*" />
     <ReferentialConstraint>
@@ -30,8 +49,13 @@
   </Association>
   <EntityContainer Name="DatabaseModelStoreContainer">
     <EntitySet Name="Departamentos" EntityType="Self.Departamentos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nivel" EntityType="Self.Nivel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Puestos" EntityType="Self.Puestos" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Puestos__CodDepa__398D8EEE" Association="Self.FK__Puestos__CodDepa__398D8EEE">
+    <AssociationSet Name="FK__Departame__Nivel__160F4887" Association="Self.FK__Departame__Nivel__160F4887">
+      <End Role="Nivel" EntitySet="Nivel" />
+      <End Role="Departamentos" EntitySet="Departamentos" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Puestos__CodDepa__19DFD96B" Association="Self.FK__Puestos__CodDepa__19DFD96B">
       <End Role="Departamentos" EntitySet="Departamentos" />
       <End Role="Puestos" EntitySet="Puestos" />
     </AssociationSet>

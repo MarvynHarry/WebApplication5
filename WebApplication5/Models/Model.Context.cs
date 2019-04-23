@@ -13,10 +13,10 @@ namespace WebApplication5.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DatabaseEntities : DbContext
+    public partial class DatabaseEntities2 : DbContext
     {
-        public DatabaseEntities()
-            : base("name=DatabaseEntities")
+        public DatabaseEntities2()
+            : base("name=DatabaseEntities2")
         {
         }
     
@@ -25,6 +25,7 @@ namespace WebApplication5.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Nivel> Nivels { get; set; }
         public virtual DbSet<Departamento> Departamentos { get; set; }
         public virtual DbSet<Puesto> Puestos { get; set; }
     }

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nivel" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Puestos" Relationship="Self.FK__Puestos__CodDepa__398D8EEE" FromRole="Departamentos" ToRole="Puestos" />
+  </EntityType>
+  <EntityType Name="Puesto">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodDepartamento" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK__Puestos__CodDepa__398D8EEE" FromRole="Puestos" ToRole="Departamentos" />
+  </EntityType>
+  <Association Name="FK__Puestos__CodDepa__398D8EEE">
+    <End Role="Departamentos" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Puestos" Type="Self.Puesto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamentos">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Puestos">
+        <PropertyRef Name="CodDepartamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Departamentos" EntityType="Self.Departamento" />
+    <EntitySet Name="Puestos" EntityType="Self.Puesto" />
+    <AssociationSet Name="FK__Puestos__CodDepa__398D8EEE" Association="Self.FK__Puestos__CodDepa__398D8EEE">
+      <End Role="Departamentos" EntitySet="Departamentos" />
+      <End Role="Puestos" EntitySet="Puestos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

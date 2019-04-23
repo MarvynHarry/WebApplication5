@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities2">
+    <EntitySetMapping Name="Nivels">
+      <EntityTypeMapping TypeName="DatabaseModel.Nivel">
+        <MappingFragment StoreEntitySet="Nivel">
+          <ScalarProperty Name="Nivel1" ColumnName="Nivel" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Departamentos">
       <EntityTypeMapping TypeName="DatabaseModel.Departamento">
         <MappingFragment StoreEntitySet="Departamentos">

@@ -134,7 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DepartamentoesController.cs" />
+    <Compile Include="Controllers\DepartamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PuestoController.cs" />
     <Compile Include="Global.asax.cs">
@@ -158,6 +158,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Nivel.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Puesto.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -178,8 +181,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model.Context.cs</LastGenOutput>
       <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -205,6 +208,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modalform.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -218,18 +222,20 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Departamentoes\Create.cshtml" />
-    <Content Include="Views\Departamentoes\Delete.cshtml" />
-    <Content Include="Views\Departamentoes\Details.cshtml" />
-    <Content Include="Views\Departamentoes\Edit.cshtml" />
-    <Content Include="Views\Departamentoes\Index.cshtml" />
+    <Content Include="Views\Departamento\Create.cshtml" />
+    <Content Include="Views\Departamento\Delete.cshtml" />
+    <Content Include="Views\Departamento\Details.cshtml" />
+    <Content Include="Views\Departamento\Edit.cshtml" />
+    <Content Include="Views\Departamento\Index.cshtml" />
     <Content Include="Views\Puesto\Create.cshtml" />
     <Content Include="Views\Puesto\Delete.cshtml" />
     <Content Include="Views\Puesto\Details.cshtml" />
     <Content Include="Views\Puesto\Edit.cshtml" />
     <Content Include="Views\Puesto\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -16,7 +16,7 @@
             @Html.DisplayNameFor(model => model.Descripcion)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Departamento.Nivel)
+            @Html.DisplayNameFor(model => model.Departamento.Descripcion)
         </th>
         <th></th>
     </tr>
@@ -27,7 +27,7 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
-           <a>nivel</a> @Html.DisplayFor(modelItem => item.Departamento.Nivel)
+            @Html.DisplayFor(modelItem => item.Departamento.Descripcion)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |
@@ -38,4 +38,3 @@
 }
 
 </table>
-

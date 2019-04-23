@@ -24,6 +24,7 @@ namespace WebApplication5.Models
         public int Nivel { get; set; }
         public string Descripcion { get; set; }
     
+        public virtual Nivel Nivel1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Puesto> Puestos { get; set; }
     }

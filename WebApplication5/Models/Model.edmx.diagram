@@ -4,11 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3f6db79e20e84eee83617559f49958c5" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.Departamento" Width="1.5" PointX="0.75" PointY="0.875" />
-        <EntityTypeShape EntityType="DatabaseModel.Puesto" Width="1.5" PointX="3" PointY="0.875" />
-        <AssociationConnector Association="DatabaseModel.FK__Puestos__CodDepa__398D8EEE" />
-      </Diagram>
+      <Diagram DiagramId="01eb8600169c456eb93689bbe2c8d771" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseModel.Nivel" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="DatabaseModel.Departamento" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="DatabaseModel.Puesto" Width="1.5" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="DatabaseModel.FK__Departame__Nivel__160F4887" />
+        <AssociationConnector Association="DatabaseModel.FK__Puestos__CodDepa__19DFD96B" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
