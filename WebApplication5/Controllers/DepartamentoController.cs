@@ -21,112 +21,60 @@ namespace WebApplication5.Controllers
             return View(departamentos.ToList());
         }
 
-        // GET: Departamento/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Departamento departamento = db.Departamentos.Find(id);
-            if (departamento == null)
-            {
-                return HttpNotFound();
-            }
-            return View(departamento);
-        }
+  
 
-        // GET: Departamento/Create
-        public ActionResult Create()
+        [HttpGet]
+        public PartialViewResult Create()
         {
             ViewBag.Nivel = new SelectList(db.Nivels, "Id", "Id");
-            return View();
+            return PartialView("Create", new Models.Departamento());
         }
-
-        // POST: Departamento/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nivel,Descripcion")] Departamento departamento)
+        public JsonResult Create(Departamento emp)
         {
-            if (ModelState.IsValid)
-            {
-                db.Departamentos.Add(departamento);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            sd.Departamentos.Add(emp);
+            sd.SaveChanges();
+            return Json(emp, JsonRequestBehavior.AllowGet);
 
-            ViewBag.Nivel = new SelectList(db.Nivels, "Id", "Id", departamento.Nivel);
-            return View(departamento);
         }
 
-        // GET: Departamento/Edit/5
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public PartialViewResult Edit(Int32 Codigo)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Departamento departamento = db.Departamentos.Find(id);
-            if (departamento == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Nivel = new SelectList(db.Nivels, "Id", "Id", departamento.Nivel);
-            return View(departamento);
-        }
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            Departamento emp = sd.Departamentos.Where(x => x.Codigo == Codigo).FirstOrDefault();
+            Departamento empclass = new Departamento();
+            empclass.Codigo = emp.Codigo;
+            empclass.Nivel =emp.Nivel;
+            empclass.Descripcion = emp.Descripcion;
+            ViewBag.Nivel = new SelectList(sd.Nivels, "Id", "Id", empclass.Nivel);
+            return PartialView(empclass);
 
-        // POST: Departamento/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nivel,Descripcion")] Departamento departamento)
+        public JsonResult Edit(Departamento emp)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(departamento).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Nivel = new SelectList(db.Nivels, "Id", "Id", departamento.Nivel);
-            return View(departamento);
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            Departamento emptb = sd.Departamentos.Where(x => x.Codigo == emp.Codigo).FirstOrDefault();
+            Departamento empclass = new Departamento();
+            emptb.Codigo = emp.Codigo;
+            emptb.Nivel = emp.Nivel;
+            emptb.Descripcion = emp.Descripcion;
+            sd.SaveChanges();
+            return Json(emptb, JsonRequestBehavior.AllowGet);
+
         }
 
-        // GET: Departamento/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Departamento departamento = db.Departamentos.Find(id);
-            if (departamento == null)
-            {
-                return HttpNotFound();
-            }
-            return View(departamento);
-        }
-
-        // POST: Departamento/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Departamento departamento = db.Departamentos.Find(id);
-            db.Departamentos.Remove(departamento);
-            db.SaveChanges();
+        public ActionResult Borrar(Int32 Codigo) {
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            var del = (from Departamento in sd.Departamentos where Departamento.Codigo == Codigo select Departamento).FirstOrDefault();
+            sd.Departamentos.Remove(del);
+            sd.SaveChanges();
             return RedirectToAction("Index");
+
+
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

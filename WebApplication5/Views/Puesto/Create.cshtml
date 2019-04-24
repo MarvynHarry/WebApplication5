@@ -1,49 +1,36 @@
 ﻿@model WebApplication5.Models.Puesto
+<script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<h2>
+    Agregar Nuevo Puesto
+</h2>
+<hr />
 
-<h2>Create</h2>
+<br />
+CodDepartamento: @Html.DropDownList("CodDepartamento", null, htmlAttributes: new { @class = "form-control" })
+<br />
+Descripcion: @Html.EditorFor(model => model.Descripcion)
+
+<p>
+    <input type="button" class="btn btn-primary" value="Guardar" onclick="Guardarpue()" />
+</p>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Puesto</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.CodDepartamento, "Departamento", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CodDepartamento", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CodDepartamento, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script type="text/javascript">
+    function Guardarpue() {
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        var CodDepartamento = $("#CodDepartamento").val();
+        var Descripcion = $("#Descripcion").val();
+
+        var InsertarDep = { "CodDepartamento": CodDepartamento, "Descripcion": Descripcion }
+
+        $.post('/Puesto/Create', InsertarDep,
+            function (data) { if (data == 0) { location.href; } }, 'json');
+        alert("Los datos se Insertarion !");
+    }
+</script>

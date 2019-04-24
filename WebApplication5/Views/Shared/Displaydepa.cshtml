@@ -1,0 +1,13 @@
+﻿@model WebApplication5.Models.Puesto
+<script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<option value="">---seleccionar departamento---</option>
+
+@if (ViewBag.CodDepartamento = null)
+{
+    foreach (var item in ViewBag.CodDepartamento)
+    {
+        <option value="@item.value">@item.text</option>
+    }
+}

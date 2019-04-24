@@ -1,49 +1,32 @@
 ﻿@model WebApplication5.Models.Departamento
+<script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Create</h2>
+<h2>
+    Agregar Nuevo Departamento
+</h2>
+<hr />
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Departamento</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nivel, "Nivel", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Nivel", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Nivel, "", new { @class = "text-danger" })
-            </div>
-        </div>
+Emp Nivel: @Html.DropDownList("Nivel", null, htmlAttributes: new { @class = "form-control" })
+<br />
+Emp Descripcion: @Html.EditorFor(model => model.Descripcion)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<p>
+    <input type="button" class="btn btn-primary" value="Guardar" onclick="Guardardep()" />
+</p>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+<script type="text/javascript">
+    function Guardardep() {
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+        var Nivel = $("#Nivel").val();
+        var Descripcion = $("#Descripcion").val();
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        var InsertarDep = { "Nivel": Nivel, "Descripcion": Descripcion }
+
+        $.post('/Departamento/Create', InsertarDep,
+            function (data) { if (data == 0) { location.href; } }, 'json');
+        alert("Los datos se Insertarion !");
+    }
+</script>

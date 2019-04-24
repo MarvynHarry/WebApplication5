@@ -7,8 +7,8 @@
       <Diagram DiagramId="01eb8600169c456eb93689bbe2c8d771" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseModel.Nivel" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="DatabaseModel.Departamento" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="DatabaseModel.Puesto" Width="1.5" PointX="5.25" PointY="1" />
         <AssociationConnector Association="DatabaseModel.FK__Departame__Nivel__160F4887" />
+        <EntityTypeShape EntityType="DatabaseModel.Puesto" Width="1.5" PointX="5.25" PointY="1" />
         <AssociationConnector Association="DatabaseModel.FK__Puestos__CodDepa__19DFD96B" />
         </Diagram>
     </edmx:Diagrams>

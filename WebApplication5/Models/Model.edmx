@@ -72,16 +72,16 @@
         <EntityContainer Name="DatabaseEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Nivels" EntityType="DatabaseModel.Nivel" />
           <EntitySet Name="Departamentos" EntityType="DatabaseModel.Departamento" />
-          <EntitySet Name="Puestos" EntityType="DatabaseModel.Puesto" />
           <AssociationSet Name="FK__Departame__Nivel__160F4887" Association="DatabaseModel.FK__Departame__Nivel__160F4887">
             <End Role="Nivel" EntitySet="Nivels" />
             <End Role="Departamento" EntitySet="Departamentos" />
           </AssociationSet>
+          <EntitySet Name="Puestos" EntityType="DatabaseModel.Puesto" />
           <AssociationSet Name="FK__Puestos__CodDepa__19DFD96B" Association="DatabaseModel.FK__Puestos__CodDepa__19DFD96B">
             <End Role="Departamento" EntitySet="Departamentos" />
             <End Role="Puesto" EntitySet="Puestos" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Nivel">
           <Key>
             <PropertyRef Name="Id" />
@@ -100,15 +100,6 @@
           <NavigationProperty Name="Nivel1" Relationship="DatabaseModel.FK__Departame__Nivel__160F4887" FromRole="Departamento" ToRole="Nivel" />
           <NavigationProperty Name="Puestos" Relationship="DatabaseModel.FK__Puestos__CodDepa__19DFD96B" FromRole="Departamento" ToRole="Puesto" />
         </EntityType>
-        <EntityType Name="Puesto">
-          <Key>
-            <PropertyRef Name="Codigo" />
-          </Key>
-          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CodDepartamento" Type="Int32" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Departamento" Relationship="DatabaseModel.FK__Puestos__CodDepa__19DFD96B" FromRole="Puesto" ToRole="Departamento" />
-        </EntityType>
         <Association Name="FK__Departame__Nivel__160F4887">
           <End Type="DatabaseModel.Nivel" Role="Nivel" Multiplicity="1" />
           <End Type="DatabaseModel.Departamento" Role="Departamento" Multiplicity="*" />
@@ -121,6 +112,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Puesto">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodDepartamento" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Departamento" Relationship="DatabaseModel.FK__Puestos__CodDepa__19DFD96B" FromRole="Puesto" ToRole="Departamento" />
+        </EntityType>
         <Association Name="FK__Puestos__CodDepa__19DFD96B">
           <End Type="DatabaseModel.Departamento" Role="Departamento" Multiplicity="1" />
           <End Type="DatabaseModel.Puesto" Role="Puesto" Multiplicity="*" />
@@ -133,7 +133,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

@@ -5,36 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Departamentos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+   <input type="button"value="Nuevo Departamento" onclick="createpopup()" />
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nivel)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nivel1.Nivel1)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Codigo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Codigo })
-        </td>
-    </tr>
+@{ 
+    WebGrid wbgrid = new WebGrid(source: Model);
+    @wbgrid.GetHtml(
+        tableStyle:"table",
+        columns: new []
+        {
+            wbgrid.Column("Codigo","Codigo"),
+            wbgrid.Column("Nivel","Nivel"),
+            wbgrid.Column("Descripcion","Descripcion"),
+            wbgrid.Column(header:"Editar", format:@<text>@Html.Raw("<input type='button' value=Editar onclick='Editarde("+item.Codigo+")'" )</text>),
+            wbgrid.Column(header:"Eliminar", format:@<text>@Html.ActionLink("X","Borrar",new{Codigo = item.Codigo },new{onclick="return confirm('seguro de que desea eliminar el departamento con Id-"+item.Codigo+"');" } )</text>)
+            
+
+
+        }
+    )
+    
+
+
 }
 
-</table>
+<div id="openpopup" style="display:none"></div>
+
+<script type="text/javascript">
+    function createpopup() {
+        var x = $("#openpopup");
+        x.load("/Departamento/Create", function () {
+            x.dialog({
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+
+                },
+                modal: true,
+                width: 450,
+                heigth: 500,
+                tittle: "Adregar Departamento",
+                resizable: false
+
+            });
+
+        });
+
+    }
+</script>
+<script type="text/javascript">
+    function Editarde(Codigo) {
+        var x = $("#openpopup");
+        x.load("/Departamento/Edit?Codigo=" + Codigo, function () {
+            x.dialog({
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+
+                },
+                modal: true,
+                width: 450,
+                heigth: 500,
+                tittle: "Actualizar Departamento" + Codigo,
+                resizable: false
+
+            });
+
+
+        });
+
+    }
+
+</script>

@@ -21,112 +21,64 @@ namespace WebApplication5.Controllers
             return View(puestos.ToList());
         }
 
-        // GET: Puesto/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Puesto puesto = db.Puestos.Find(id);
-            if (puesto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(puesto);
-        }
 
-        // GET: Puesto/Create
-        public ActionResult Create()
+        //aqui inicia el codigo
+        [HttpGet]
+        public PartialViewResult Create()
         {
+            
             ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Descripcion");
-            return View();
+            return PartialView("Create", new Models.Puesto());
         }
-
-        // POST: Puesto/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,CodDepartamento,Descripcion")] Puesto puesto)
+        public JsonResult Create(Puesto emp)
         {
-            if (ModelState.IsValid)
-            {
-                db.Puestos.Add(puesto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            sd.Puestos.Add(emp);
+            sd.SaveChanges();
+            return Json(emp, JsonRequestBehavior.AllowGet);
 
-            ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Descripcion", puesto.CodDepartamento);
-            return View(puesto);
         }
 
-        // GET: Puesto/Edit/5
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public PartialViewResult Edit(Int32 Codigo)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Puesto puesto = db.Puestos.Find(id);
-            if (puesto == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Descripcion", puesto.CodDepartamento);
-            return View(puesto);
-        }
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            Puesto emp = sd.Puestos.Where(x => x.Codigo == Codigo).FirstOrDefault();
+            Puesto empclass = new Puesto();
+            empclass.Codigo = emp.Codigo;
+            empclass.CodDepartamento = emp.CodDepartamento;
+            empclass.Descripcion = emp.Descripcion;
+          
+            ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Descripcion",empclass.CodDepartamento);
+           
+            return PartialView(empclass);
 
-        // POST: Puesto/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,CodDepartamento,Descripcion")] Puesto puesto)
+        public JsonResult Edit(Puesto emp)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(puesto).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CodDepartamento = new SelectList(db.Departamentos, "Codigo", "Descripcion", puesto.CodDepartamento);
-            return View(puesto);
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            Puesto emptb = sd.Puestos.Where(x => x.Codigo == emp.Codigo).FirstOrDefault();
+            Puesto empclass = new Puesto();
+            emptb.Codigo = emp.Codigo;
+            emptb.CodDepartamento = emp.CodDepartamento;
+            emptb.Descripcion = emp.Descripcion;
+            sd.SaveChanges();
+            return Json(emptb, JsonRequestBehavior.AllowGet);
+
         }
 
-        // GET: Puesto/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Borrar(Int32 Codigo)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Puesto puesto = db.Puestos.Find(id);
-            if (puesto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(puesto);
-        }
-
-        // POST: Puesto/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Puesto puesto = db.Puestos.Find(id);
-            db.Puestos.Remove(puesto);
-            db.SaveChanges();
+            DatabaseEntities2 sd = new DatabaseEntities2();
+            var del = (from Puesto in sd.Puestos where Puesto.Codigo == Codigo select Puesto).FirstOrDefault();
+            sd.Puestos.Remove(del);
+            sd.SaveChanges();
             return RedirectToAction("Index");
+
+
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
